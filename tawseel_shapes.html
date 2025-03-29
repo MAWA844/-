@@ -226,11 +226,21 @@
     align-items: center;
   }
 
-  #matching-area {
-    flex-direction: row !important; /* صف */
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 8px !important;
+  #matching-area,
+  #names-area {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .matching-shape-item,
+  .matching-name-item {
+    width: 45%;
+    max-width: none;
+    font-size: 1.1em;
+    padding: 8px 10px;
+    margin: 5px auto;
   }
   .item {
     min-width: 45% !important; /* يخليهم عمودين */
