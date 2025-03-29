@@ -96,36 +96,40 @@
     }
   
     .matching-shape-item {
-      background-color: #ffc6d0;
-      border: none;
-      border-radius: 10px;
-      font-size: 32px;
-      padding: 6px 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: auto;
-      height: auto;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s;
-      line-height: 1;
-    }
+  background-color: #ffc6d0;
+  border-radius: 6px;
+  padding: 2px 4px; /* أقل ما يمكن */
+  font-size: 28px; /* حجم الرمز */
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  line-height: 1;
+  margin: 0; /* بدون أي هوامش */
+}
+
   
     .matching-name-item {
-      background-color: #c6f7e2;
-      border-radius: 10px;
-      font-size: 14px;
-      padding: 6px 10px;
-      text-align: center;
-      max-width: 70px;
-      word-break: break-word;
-      white-space: normal;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-  
+  background-color: #c6f7e2;
+  border-radius: 8px;
+  padding: 4px 6px; /* أقل padding ممكن */
+  font-size: 13px; /* صغّر الخط كمان شوية */
+  max-width: 70px;  /* أصغر عرض ممكن لاحتواء الكلمة */
+  word-break: break-word;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: inline-block;
+  line-height: 1.1;
+  margin: 4px auto; /* هوامش صغيرة جدًا */
+}
+
+
     .matching-shape-item:hover,
     .matching-name-item:hover {
       transform: scale(1.05);
