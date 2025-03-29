@@ -139,7 +139,7 @@
   <h2>مسألة جمع جديدة ➕</h2>
   <h3>💖 جاهزين ياعباقرة؟</h3>
   <div style="text-align: center; margin: 20px;">
-    <img src="assets/images/صورة10.png"
+    <img src="صورة10.png"
          alt="وصف الصورة"
          style="max-width: 150px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
   </div>
@@ -218,24 +218,31 @@ document.getElementById("difficulty-select").addEventListener("change", () => {
 });
 
 
-    function checkAnswer() {
-      const input = document.getElementById("userAnswer").value;
-      const userAnswer = parseInt(convertToEnglishNumbers(input));
-      const resultElem = document.getElementById("result");
+function checkAnswer() {
+  const input = document.getElementById("userAnswer").value;
+  const userAnswer = parseInt(convertToEnglishNumbers(input));
+  const resultElem = document.getElementById("result");
 
-      if (!isNaN(userAnswer)) {
-        if (userAnswer === ans) {
-          resultElem.textContent = "👌 إجابة صحيحة!";
-          resultElem.style.color = "green";
-        } else {
-          resultElem.textContent = `❌ الإجابة خاطئة. الإجابة الصحيحة هي ${convertToArabicNumbers(ans)}.`;
-          resultElem.style.color = "red";
-        }
-      } else {
-        resultElem.textContent = "من فضلك اكتب رقمًا صحيحًا.";
-        resultElem.style.color = "orange";
-      }
+  if (!isNaN(userAnswer)) {
+    if (userAnswer === ans) {
+      resultElem.textContent = "👌 إجابة صحيحة!";
+      resultElem.style.color = "green";
+    } else {
+      resultElem.textContent = `❌ الإجابة خاطئة. الإجابة الصحيحة هي ${convertToArabicNumbers(ans)}.`;
+      resultElem.style.color = "red";
     }
+  } else {
+    resultElem.textContent = "من فضلك اكتب رقمًا صحيحًا.";
+    resultElem.style.color = "orange";
+  }
+
+  // ✨ بعد 2 ثانية يجيب سؤال جديد تلقائيًا
+  setTimeout(() => {
+    generateAdditionQuestion(); // ✅ هنا الدالة الخاصة بأسئلة الجمع
+  }, 2000);
+}
+
+
     const azkar = [
     "اللهم اجعلنا من أهل القرآن.",
     "اللهم إني أسألك العفو والعافية.",
