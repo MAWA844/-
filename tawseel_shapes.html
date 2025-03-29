@@ -82,15 +82,12 @@
   
     #matching-area,
 #names-area {
-  flex: 1;
-  min-width: 150px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* صفين بدون تغيير في الحجم */
+  gap: 10px;
   justify-content: center;
-  align-items: flex-start;
-  gap: 8px;
 }
+
 
     .matching-name-item {
   background-color: #c6f7e2;
@@ -221,23 +218,27 @@
     }
   
     @media only screen and (max-width: 600px) {
-      .container {
-        flex-direction: column;
-        gap: 20px;
-      }
-  
-      .item {
-        min-width: 90% !important;
-        font-size: 1.3em !important;
-      }
-  
-      #matching-area,
-      #names-area {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
+  .matching-name-item,
+  .matching-shape-item {
+    font-size: 1em !important;
+    padding: 6px 10px !important;
+    max-width: 80px !important;
+  }
+  .item {
+    min-width: 160px !important; /* أصغر شوية علشان تبقى لطيفة في العرض */
+    padding: 12px 16px !important; /* تصغير المسافات الداخلية */
+    font-size: 1.1em !important; /* تصغير الخط */
+    margin: auto;
+  }
+  #matching-area,
+  #names-area {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
   </style>
   
   
