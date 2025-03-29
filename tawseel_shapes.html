@@ -59,16 +59,15 @@
   
     .item {
   background-color: #f8bbd0;
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: 15px 20px;
+  border-radius: 12px;
   cursor: pointer;
-  min-width: auto;
-  font-size: 1em;
-  text-align: center;
+  min-width: 200px;
+  font-size: 1.2em;
   transition: background 0.3s;
   position: relative;
   z-index: 10;
-  display: inline-block;
+  text-align: center;
 }
 
   
@@ -82,12 +81,8 @@
   
     #matching-area,
 #names-area {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* صفين بدون تغيير في الحجم */
-  gap: 10px;
-  justify-content: center;
+  flex-direction: column;
 }
-
 
     .matching-name-item {
   background-color: #c6f7e2;
@@ -218,26 +213,37 @@
     }
   
     @media only screen and (max-width: 600px) {
-  .matching-name-item,
   .matching-shape-item {
-    font-size: 1em !important;
-    padding: 6px 10px !important;
-    max-width: 80px !important;
+    font-size: 24px !important;       /* حجم الرمز نفسه */
+    padding: 6px 8px !important;       /* تقليل المسافة حواليه */
+    width: auto !important;
+    height: auto !important;
+    min-width: 40px !important;        /* أقل عرض ممكن */
+    max-width: 50px !important;        /* مايزيدش قوي */
+    margin: 6px auto !important;
+    display: inline-flex !important;   /* عشان ييجوا جمب بعض */
+    justify-content: center;
+    align-items: center;
+  }
+
+  #matching-area {
+    flex-direction: row !important; /* صف */
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
   }
   .item {
-    min-width: 160px !important; /* أصغر شوية علشان تبقى لطيفة في العرض */
-    padding: 12px 16px !important; /* تصغير المسافات الداخلية */
-    font-size: 1.1em !important; /* تصغير الخط */
-    margin: auto;
+    min-width: 45% !important; /* يخليهم عمودين */
+    padding: 10px 12px !important;
+    font-size: 1em !important;
   }
-  #matching-area,
-  #names-area {
-    flex-direction: row !important;
-    flex-wrap: wrap;
+
+  .container {
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
   }
 }
+
 
   </style>
   
