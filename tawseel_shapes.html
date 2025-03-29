@@ -211,48 +211,37 @@
       font-size: 0.9em;
       color: #666;
     }
-  
     @media only screen and (max-width: 600px) {
-  #matching-container {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
   #matching-area,
   #names-area {
-    flex: 1 1 45%;
-    display: flex !important;
-    flex-direction: column !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr; /* عمودين متساويين */
     gap: 10px;
-    align-items: center;
+    justify-items: center;
+    align-items: start;
   }
 
-  .matching-shape-item {
-    font-size: 24px !important;
-    padding: 6px 8px !important;
-    min-width: 40px !important;
-    max-width: 50px !important;
-    margin: 6px 0 !important;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-  }
-
+  .matching-shape-item,
   .matching-name-item {
-    font-size: 14px !important;
-    max-width: 120px;
-    padding: 8px 10px;
-    word-break: break-word;
+    font-size: 1.1em !important;
+    padding: 6px 10px !important;
+    width: 100% !important;
+    max-width: 90px !important;
     text-align: center;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .item {
     min-width: 45% !important;
-    padding: 10px 12px !important;
+    padding: 10px 10px !important;
     font-size: 1em !important;
+    margin: auto;
+  }
+
+  .container {
+    justify-content: center;
+    gap: 15px;
   }
 }
 
