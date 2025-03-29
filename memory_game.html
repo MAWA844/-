@@ -3,21 +3,17 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  
-  
   <title>لعبة البطاقات التعليمية</title>
   <style>
-   body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fff8f0;
-  text-align: center;
-  padding: 20px;
-  margin: 0;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8f0;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
 
     h1 { color: #c2185b; }
 
@@ -27,19 +23,32 @@
       margin-top: 10px;
     }
 
-    .game-board {
+    #board {
       display: grid;
-      gap: 15px;
+      grid-template-columns: repeat(2, 140px);
+      gap: 20px;
       justify-content: center;
-      margin-top: 20px;
+      padding: 20px;
     }
 
     .card {
-      width: 100px;
-      height: 100px;
+      width: 140px;
+      height: 140px;
+      background-color: #ffe6f0;
+      border-radius: 12px;
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
       perspective: 1000px;
-      position: relative;
       cursor: pointer;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
     }
 
     .card-inner {
@@ -63,7 +72,7 @@
       align-items: center;
       justify-content: center;
       backface-visibility: hidden;
-      font-size: 2em;
+      font-size: 2.2em;
     }
 
     .card-front {
@@ -95,137 +104,90 @@
       from { transform: scale(0.8); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
     .alert-message {
-  font-size: 18px;
-  color: #fff;
-  background-color: #db96c4;
-  padding: 15px;
-  border-radius: 10px;
-  max-width: 300px;
-  position: fixed;
-  top: 20px;
-  right: 20px; /* بدل left: 50% */
-  z-index: 1000;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.alert-message.show {
-    opacity: 1;  /* جعل الإشعار يظهر */
-}
-.buttons-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.btn-custom {
-  padding: 10px 25px;
-  font-size: 1em;
-  border-radius: 10px;
-  background-color: #a5d6a7;
-  color: black;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: bold;
-}
-
-.btn-custom:hover {
-  background-color: #81c784;
-}
-@media only screen and (max-width: 600px) {
-    body {
-      padding: 10px !important;
-      font-size: 16px !important;
-      text-align: center !important;
-      margin: 0 !important;
+      font-size: 18px;
+      color: #fff;
+      background-color: #db96c4;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 300px;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
 
-    h1, h2, h3 {
-      font-size: 20px !important;
-      text-align: center !important;
+    .alert-message.show {
+      opacity: 1;
     }
 
-    img {
-      max-width: 80% !important;
-      height: auto !important;
-      margin: 10px auto !important;
-      display: block !important;
+    .buttons-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
     }
 
-    select,
-    input[type="text"],
-    input[type="number"],
-    button {
-      width: 90% !important;
-      font-size: 16px !important;
-      padding: 10px !important;
-      margin: 10px auto !important;
-      display: block !important;
+    .btn-custom {
+      padding: 10px 25px;
+      font-size: 1em;
+      border-radius: 10px;
+      background-color: #a5d6a7;
+      color: black;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
     }
 
-    #options {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 10px !important;
-      align-items: center !important;
-      justify-content: center !important;
+    .btn-custom:hover {
+      background-color: #81c784;
     }
 
-    #options button {
-      width: 90% !important;
+    @media only screen and (max-width: 600px) {
+      #board {
+        grid-template-columns: repeat(2, 120px);
+      }
+
+      .card {
+        width: 120px;
+        height: 120px;
+        font-size: 32px;
+      }
     }
-
-    footer {
-      font-size: 12px !important;
-      padding: 10px !important;
-    }
-  }
-
-
-
   </style>
 </head>
 <body>
-
   <h1>🧠 لعبة البطاقات التعليمية</h1>
   <h2>انظر واذكر</h2>
   <div style="text-align: center; margin: 20px;">
-    <img src="صورة3.png"
-         alt="وصف الصورة"
-         style="max-width: 150px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+    <img src="صورة3.png" alt="وصف الصورة" style="max-width: 150px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
   </div>
   <div id="timer">الوقت: <span id="seconds">0</span> ثانية</div>
   <div class="game-board" id="board"></div>
-
   <div id="result" class="result-message" style="display: none;"></div>
   <audio id="correct-sound" src="soundscorrect.mp3"></audio>
   <audio id="wrong-sound" src="soundswrong.mp3"></audio>
-  
   <div class="buttons-area">
     <button onclick="restartGame()" class="btn-custom">🌀 سؤال جديد</button>
     <a href="index.html"><button class="btn-custom">🏠 رجوع للرئيسية</button></a>
   </div>
-  
-
   <footer style="margin-top: 40px; padding: 15px; background-color: #333; color: white; border-radius: 10px; font-size: 14px;">
     © حقوق الملكية محفوظة لمروة أبو بكر - سلطنة عمان 2025
   </footer>
-  <audio id="correct-sound" src="soundscorrect.mp3"></audio>
-  <audio id="wrong-sound" src="soundswrong.mp3"></audio>
+
   <script>
     const correctSound = document.getElementById('correct-sound');
-const wrongSound = document.getElementById('wrong-sound');
-
+    const wrongSound = document.getElementById('wrong-sound');
     const allSymbols = ['🔺', '⬜', '⭐', '❤️', '◠', '🟥', '🔵', '⬛', '⬟', '◆', '✳️', '✴️'];
     const allNumbers = ['١','٢','٣','٤','٥','٦','٧','٨','٩','١٠','١١','١٢'];
     let useSymbols = true;
@@ -234,7 +196,6 @@ const wrongSound = document.getElementById('wrong-sound');
     let seconds = 0;
     let timerInterval;
     let level = 1;
-
     const board = document.getElementById('board');
     const resultEl = document.getElementById("result");
 
@@ -259,7 +220,7 @@ const wrongSound = document.getElementById('wrong-sound');
       let cardsNeeded = 2 + level * 2;
       let unique = shuffle(currentSet).slice(0, cardsNeeded / 2);
       let fullSet = shuffle([...unique, ...unique]);
-      board.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(cardsNeeded))}, 100px)`;
+      board.style.gridTemplateColumns = '';
 
       fullSet.forEach(symbol => {
         const card = document.createElement('div');
@@ -308,10 +269,8 @@ const wrongSound = document.getElementById('wrong-sound');
             correctSound.play();
             if (matched === board.children.length) {
               clearInterval(timerInterval);
-
               resultEl.innerHTML = `🎉 أحسنت! خلصت المرحلة <strong>${level}</strong> في <strong>${seconds}</strong> ثانية!`;
               resultEl.style.display = "inline-block";
-
               setTimeout(() => {
                 resultEl.style.display = "none";
                 level++;
@@ -336,7 +295,6 @@ const wrongSound = document.getElementById('wrong-sound');
       createBoard();
     }
 
-    createBoard();
     const azkar = [
     "اللهم اجعلنا من أهل القرآن.",
     "اللهم إني أسألك العفو والعافية.",
@@ -433,8 +391,7 @@ const wrongSound = document.getElementById('wrong-sound');
     "اللهم اجعلنا من أهل التحمل.",
     "اللهم اجعلنا من أهل البر.",
     "اللهم اجعلنا من أهل الولاء."
-    ];
-
+];
     function showAzkar() {
       const alertDiv = document.createElement("div");
       alertDiv.className = "alert-message";
@@ -447,6 +404,7 @@ const wrongSound = document.getElementById('wrong-sound');
 
     setInterval(showAzkar, 60000);
     showAzkar();
+    createBoard();
   </script>
 </body>
 </html>
