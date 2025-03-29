@@ -96,20 +96,22 @@
     }
   
     .matching-name-item {
-  padding: 8px 12px;
+  min-width: auto !important;
+  max-width: 90px; /* حجم الكارت أصغر */
+  width: fit-content !important;
+  padding: 8px 12px; /* تصغير البُعد الداخلي */
   font-size: 1em;
   border-radius: 10px;
+  margin: 6px auto;
+  text-align: center;
+  display: inline-block;
   background-color: #c6f7e2;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.2s;
-  display: inline-block;
-  max-width: 150px;
-  width: fit-content;
-  text-align: center;
-  margin: 6px auto;
-  white-space: normal;
+  word-wrap: break-word; /* عشان الاسم ينزل على سطرين لو طويل */
 }
+
 
 
     .matching-shape-item {
