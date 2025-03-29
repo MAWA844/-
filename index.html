@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body dir="rtl">
-    <div id="login-form" style="display: none;">
+    <div id="login-form">
         <h2>تسجيل الدخول / إنشاء حساب</h2>
         <div id="signup-section">
             <h3>إنشاء حساب جديد</h3>
@@ -39,78 +39,69 @@
 
     <div id="app" style="display: block; text-align: center; padding-top: 20px;">
 
-  
         <!-- العنوان -->
         <h1 style="font-size: 28px; color: #e48bae; margin-bottom: 15px;">
           الرياضيات 💖 السعيدة
         </h1>
-        
+
         <!-- زر المحبة -->
         <button id="showAlertBtn" style="padding: 10px 20px; font-size: 18px; background-color: #f7c6d9; border: none; border-radius: 8px; cursor: pointer;">
           رسالة 💖 محبة
         </button>
-      
+
         <!-- رسالة الترحيب -->
         <p style="font-size: 20px; margin-top: 15px;">
           مرحــــــــــــباً 💖 يا 🌸<span id="user-display-name" style="font-weight: bold;"></span>
         </p>
-      
+
         <!-- صورة القطة -->
         <img src="صورة1.png"
              alt="قطة لطيفة"
              style="max-width: 280px; height: auto; border-radius: 20px; box-shadow: 0 0 12px rgba(0,0,0,0.15); margin-top: 15px;" />
-      
-      </div>
-      
 
-        <div id="options" dir="rtl">
-            <button onclick="location.href='addition.html'">جمع</button>
-            <button onclick="location.href='subtraction.html'">طرح</button>
-            <button onclick="location.href='multiplication.html'">ضرب</button>
-            <button onclick="location.href='memory_game.html'">لعبة الذاكرة</button>
-            <button onclick="location.href='guessing-game.html'">لعبة تخمين الرقم</button>
-            <button onclick="location.href='division.html'">قسمة</button>
-            <button onclick="location.href='operations.html'">ترتيب العمليات الحسابية</button>
-            <button onclick="location.href='shape-guess.html'">تعرف على الاشكال  </button>
-            <button onclick="location.href='tawseel_shapes.html'">توصيل الاشكال
-             </button>
-             <button onclick="location.href='settings.html'">⚙️ الإعدادات</button>
-
-            
-        </div>
-        
-        
-        <div id="shape-name-game" style="display: none;" dir="rtl">
-            <h2>تعرف على الأشكال</h2>
-            <p id="shape-to-identify" style="font-size: 5em;"></p>
-            <div id="shape-name-options">
-                <button></button>
-                <button></button>
-                <button></button>
-            </div>
-            <p id="shape-name-result"></p>
-        </div>
-
-        <div id="shape-matching-game" style="display: none;" dir="rtl">
-            <h2>توصيل الأشكال</h2>
-            <div id="matching-area" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-                </div>
-            <div id="names-area" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center;">
-                </div>
-            <button id="check-matching">تحقق من التوصيل</button>
-            <p id="matching-result"></p>
-        </div>
-        
-
-        <button id="logout-btn">تسجيل الخروج</button>
     </div>
+
+    <div id="options" dir="rtl" style="display: none;">
+
+        <button onclick="location.href='addition.html'">جمع</button>
+        <button onclick="location.href='subtraction.html'">طرح</button>
+        <button onclick="location.href='multiplication.html'">ضرب</button>
+        <button onclick="location.href='memory_game.html'">لعبة الذاكرة</button>
+        <button onclick="location.href='guessing-game.html'">لعبة تخمين الرقم</button>
+        <button onclick="location.href='division.html'">قسمة</button>
+        <button onclick="location.href='operations.html'">ترتيب العمليات الحسابية</button>
+        <button onclick="location.href='shape-guess.html'">تعرف على الاشكال</button>
+        <button onclick="location.href='tawseel_shapes.html'">توصيل الاشكال</button>
+        <button onclick="location.href='settings.html'">⚙️ الإعدادات</button>
+    </div>
+
+    <div id="shape-name-game" style="display: none;" dir="rtl">
+        <h2>تعرف على الأشكال</h2>
+        <p id="shape-to-identify" style="font-size: 5em;"></p>
+        <div id="shape-name-options">
+            <button></button>
+            <button></button>
+            <button></button>
+        </div>
+        <p id="shape-name-result"></p>
+    </div>
+
+    <div id="shape-matching-game" style="display: none;" dir="rtl">
+        <h2>توصيل الأشكال</h2>
+        <div id="matching-area" style="display: flex; flex-wrap: wrap; justify-content: space-around;"></div>
+        <div id="names-area" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center;"></div>
+        <button id="check-matching">تحقق من التوصيل</button>
+        <p id="matching-result"></p>
+    </div>
+
+    <button id="logout-btn">تسجيل الخروج</button>
+
     <br>
-    
-    
+
     <footer>
         <p>© حقوق الملكية مروة أبو بكر 2025، سلطنة عمان</p>
     </footer>
-    
+
     <script type="module" src="script.js"></script>
 
 </body>
