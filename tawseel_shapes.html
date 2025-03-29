@@ -69,17 +69,22 @@
   gap: 20px;
 }
 
-.matching-shape-item,
-.matching-name-item {
-  background-color: #ffe0f0;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 20px;
-  text-align: center;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+.matching-shape-item {
+  background-color: #ffc6d0;
+  border: none;
+  border-radius: 10px;
+  font-size: 32px; /* حجم الرمز */
+  width: 60px;      /* عرض صغير على قد الرمز */
+  height: 60px;     /* ارتفاع صغير كمان */
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   cursor: pointer;
+  transition: transform 0.2s;
 }
+
 
 .matching-shape-item:hover,
 .matching-name-item:hover {
