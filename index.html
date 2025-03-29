@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرياضيات💖السعيدة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body dir="rtl">
+    <div id="login-form" style="display: none;">
+        <h2>تسجيل الدخول / إنشاء حساب</h2>
+        <div id="signup-section">
+            <h3>إنشاء حساب جديد</h3>
+            <input type="text" id="signupName" placeholder="اسمك الجميل 🧸">
+            <select id="signupGender">
+              <option value="">اختر النوع 👤</option>
+              <option value="ولد">ولد</option>
+              <option value="بنت">بنت</option>
+            </select>
+            <input type="email" id="signupEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="signupPassword" placeholder="كلمة المرور">
+            <button id="signupButton">إنشاء حساب</button>
+            <p id="signupError" class="error-message"></p>
+        </div>
+        <div id="login-section">
+            <h3>تسجيل الدخول</h3>
+            <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="loginPassword" placeholder="كلمة المرور">
+            <button id="loginButton">تسجيل الدخول</button>
+            <p id="loginError" class="error-message"></p>
+        </div>
+        <div>
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">تذكرني</label>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <h1>الرياضيات💖السعيدة</h1>
+        <button id="showAlertBtn">رسالة💖 محبة</button>
+
+        <p>مرحــــــــــــباً 💖 يا 🌸<span id="user-display-name"></span></p>
+        <img src="assets/images/صورة1.png"
+        alt="وصف الصورة"
+        style="max-width:520px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+ </div>
+
+        <div id="options" dir="rtl">
+            <button onclick="location.href='addition.html'">جمع</button>
+            <button onclick="location.href='subtraction.html'">طرح</button>
+            <button onclick="location.href='multiplication.html'">ضرب</button>
+            <button onclick="location.href='memory_game.html'">لعبة الذاكرة</button>
+            <button onclick="location.href='guessing-game.html'">لعبة تخمين الرقم</button>
+            <button onclick="location.href='division.html'">قسمة</button>
+            <button onclick="location.href='operations.html'">ترتيب العمليات الحسابية</button>
+            <button onclick="location.href='shape-guess.html'">تعرف على الاشكال  </button>
+            <button onclick="location.href='tawseel_shapes.html'">توصيل الاشكال
+             </button>
+             <button onclick="location.href='settings.html'">⚙️ الإعدادات</button>
+
+            
+        </div>
+        
+        
+        <div id="shape-name-game" style="display: none;" dir="rtl">
+            <h2>تعرف على الأشكال</h2>
+            <p id="shape-to-identify" style="font-size: 5em;"></p>
+            <div id="shape-name-options">
+                <button></button>
+                <button></button>
+                <button></button>
+            </div>
+            <p id="shape-name-result"></p>
+        </div>
+
+        <div id="shape-matching-game" style="display: none;" dir="rtl">
+            <h2>توصيل الأشكال</h2>
+            <div id="matching-area" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+                </div>
+            <div id="names-area" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center;">
+                </div>
+            <button id="check-matching">تحقق من التوصيل</button>
+            <p id="matching-result"></p>
+        </div>
+        
+
+        <button id="logout-btn">تسجيل الخروج</button>
+    </div>
+    <br>
+    
+    
+    <footer>
+        <p>© حقوق الملكية مروة أبو بكر 2025، سلطنة عمان</p>
+    </footer>
+    
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>

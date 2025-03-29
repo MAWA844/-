@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الإعدادات</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #c2185b;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: #ffe0f0;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+      text-align: right;
+      line-height: 2;
+      font-size: 18px;
+    }
+
+    .back-button {
+      margin-top: 30px;
+      background-color: #ba68c8;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      background-color: #ab47bc;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .settings-box {
+      background-color: #fff0f5;
+      padding: 20px;
+      border-radius: 15px;
+      width: 300px;
+      margin: 20px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .settings-box input,
+    .settings-box select {
+      width: 90%;
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .settings-box button {
+      background-color: #f48fb1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .settings-box button:hover {
+      background-color: #ec407a;
+    }
+
+    .settings-button {
+      background-color: #f48fb1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .settings-button:hover {
+      background-color: #ec407a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- زر الإعدادات -->
+  
+
+  <h1>⚙️ صفحة الإعدادات</h1>
+
+  <div class="settings-box">
+    <input type="text" id="userName" placeholder="اكتب اسمك">
+    <select id="userGender">
+      <option value="ولد">ولد</option>
+      <option value="بنت">بنت</option>
+    </select>
+    <input type="number" id="userAgeInput" placeholder="اكتب سنك" min="3" max="60">
+    <button onclick="saveSettings()">💾 حفظ البيانات</button>
+  </div>
+
+  <div class="card">
+    <p><strong>👤 الاسم:</strong> <span id="user-name">غير محدد</span></p>
+    <p><strong>👧 النوع:</strong> <span id="user-gender">غير محدد</span></p>
+    <p><strong>🎂 السن:</strong> <span id="user-age">غير محدد</span></p>
+    <hr>
+    <p><strong>📘 عن البرنامج:</strong><br>
+    برنامج تعليمي يهدف إلى تعليم الرياضيات بأسلوب شيق وممتع، من خلال ألعاب وأنشطة تفاعلية تساعد الأطفال على الفهم السلس.</p>
+    <hr>
+    <p><strong>🔒 حقوق الملكية:</strong><br>
+    جميع الحقوق محفوظة لمروة أبو بكر - سلطنة عمان 2025 ©</p>
+  </div>
+
+  <br>
+  <a href="index.html" class="back-button">🔙 العودة للرئيسية</a>
+
+  <footer>
+    إصدار تعليمي مخصص للأطفال 🧠✨
+  </footer>
+
+  <script>
+    const nameDisplay = document.getElementById("user-name");
+    const genderDisplay = document.getElementById("user-gender");
+    const ageDisplay = document.getElementById("user-age");
+
+    function saveSettings() {
+      const name = document.getElementById("userName").value.trim();
+      const gender = document.getElementById("userGender").value;
+      const age = document.getElementById("userAgeInput").value.trim();
+
+      if (name === "" || age === "") {
+        alert("من فضلك اكتب اسمك وسنك");
+        return;
+      }
+
+      if (age < 3 || age > 60) {
+        alert("السن المسموح من 3 لـ 60 سنة فقط يا قمر 🌟");
+        return;
+      }
+
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userGender", gender);
+      localStorage.setItem("userAge", age);
+
+      nameDisplay.innerText = name;
+      genderDisplay.innerText = gender;
+      ageDisplay.innerText = age;
+
+      alert(`تم حفظ بياناتك بنجاح يا ${gender === "ولد" ? "بطل" : "أميرة"} 🌟`);
+    }
+
+    window.onload = function () {
+      const savedName = localStorage.getItem("userName") || "غير محدد";
+      const savedGender = localStorage.getItem("userGender") || "غير محدد";
+      const savedAge = localStorage.getItem("userAge") || "غير محدد";
+
+      nameDisplay.innerText = savedName;
+      genderDisplay.innerText = savedGender;
+      ageDisplay.innerText = savedAge;
+
+      if (savedName !== "غير محدد") document.getElementById("userName").value = savedName;
+      if (savedGender !== "غير محدد") document.getElementById("userGender").value = savedGender;
+      if (savedAge !== "غير محدد") document.getElementById("userAgeInput").value = savedAge;
+    };
+  </script>
+</body>
+</html>

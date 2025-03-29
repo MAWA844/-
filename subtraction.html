@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مسائل الطرح</title>
+  <style>
+   body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fff8f0;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+    h2 {
+      color: #ff6f69;
+      margin-bottom: 20px;
+    }
+
+    #question {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background-color: #a8e6cf;
+      cursor: pointer;
+      margin: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ce8dd7;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+    .alert-message {
+  font-size: 18px;
+  color: #fff;
+  background-color: #db96c4;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 300px;
+  position: fixed;
+  top: 20px;
+  right: 20px; /* بدل left: 50% */
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.alert-message.show {
+    opacity: 1;  /* جعل الإشعار يظهر */
+}
+@media only screen and (max-width: 600px) {
+    body {
+      padding: 10px !important;
+      font-size: 16px !important;
+      text-align: center !important;
+      margin: 0 !important;
+    }
+
+    h1, h2, h3 {
+      font-size: 20px !important;
+      text-align: center !important;
+    }
+
+    img {
+      max-width: 80% !important;
+      height: auto !important;
+      margin: 10px auto !important;
+      display: block !important;
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"],
+    button {
+      width: 90% !important;
+      font-size: 16px !important;
+      padding: 10px !important;
+      margin: 10px auto !important;
+      display: block !important;
+    }
+
+    #options {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #options button {
+      width: 90% !important;
+    }
+
+    footer {
+      font-size: 12px !important;
+      padding: 10px !important;
+    }
+  }
+
+
+
+  </style>
+</head>
+<body>
+
+  <h2>مسألة طرح جديدة ➖</h2>
+  <h3>💖 يلا نختبر العباقرة!</h3>
+
+
+  <div style="text-align: center; margin: 20px;">
+    <img src="assets/images/صورة7.png"
+         alt="وصف الصورة"
+         style="max-width: 150px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+  </div>
+  <p id="question">اختاروا مستوى التحدي يا شطار 🧠</p>
+
+  <label for="difficulty-select">اختار المستوى:</label>
+  <select id="difficulty-select" onchange="generateSubtractionQuestion()">
+    <option value="easy1">سهل جدًا (1 - 9)</option>
+    <option value="easy2">سهل (10 - 100)</option>
+    <option value="medium">متوسط (100 - 500)</option>
+    <option value="hard">صعب (500 - 999)</option>
+    <option value="harder">صعب جدًا (1000 - 9999)</option>
+    <option value="extreme">منتهى الصعوبة (10000 - 50000)</option>
+  </select>
+
+  <br><br>
+  <input type="text" id="userAnswer" placeholder="اكتب الإجابة هنا" inputmode="numeric" oninput="arabize(this)">
+  <br>
+  <button id="submitBtn" style="display:none;">تحقّق ✅</button>
+  <button id="newQuestionBtn">سؤال جديد 🔄</button>
+  <p id="result"></p>
+
+  <button onclick="window.location.href='index.html'">🏠 رجوع للرئيسية</button>
+
+  <footer style="margin-top: 40px; padding: 15px; background-color: #333; color: white; border-radius: 10px; font-size: 14px;">
+    © حقوق الملكية محفوظة لمروة أبو بكر - سلطنة عمان 2025
+  </footer>
+
+  <script>
+    const convertToArabicNumbers = number =>
+      String(number).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+    const convertToEnglishNumbers = str =>
+      str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+    function arabize(input) {
+      let onlyNumbers = input.value.replace(/[^\d٠-٩]/g, '');
+      input.value = onlyNumbers.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+    }
+
+    let num1, num2, ans;
+
+    function getRangeForDifficulty() {
+      const level = document.getElementById('difficulty-select').value;
+      switch (level) {
+        case 'easy1': return [1, 9];
+        case 'easy2': return [10, 100];
+        case 'medium': return [100, 500];
+        case 'hard': return [500, 999];
+        case 'harder': return [1000, 9999];
+        case 'extreme': return [10000, 50000];
+        default: return [1, 10];
+      }
+    }
+
+    function generateSubtractionQuestion() {
+      const [min, max] = getRangeForDifficulty();
+      num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+      num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      // تأكد إن الناتج موجب
+      if (num2 > num1) [num1, num2] = [num2, num1];
+
+      ans = num1 - num2;
+
+      document.getElementById('question').textContent =
+        `احسب: ${convertToArabicNumbers(num1)} - ${convertToArabicNumbers(num2)} = ؟`;
+
+      document.getElementById('userAnswer').value = '';
+      document.getElementById('result').textContent = '';
+      document.getElementById('submitBtn').style.display = 'inline-block';
+    }
+
+    let hasGeneratedOnce = false;
+    document.getElementById("difficulty-select").addEventListener("change", () => {
+      hasGeneratedOnce = true;
+      generateSubtractionQuestion();
+    });
+
+    function checkAnswer() {
+      const input = document.getElementById("userAnswer").value;
+      const userAnswer = parseInt(convertToEnglishNumbers(input));
+      const resultElem = document.getElementById("result");
+
+      if (!isNaN(userAnswer)) {
+        if (userAnswer === ans) {
+          resultElem.textContent = "👌 إجابة صحيحة!";
+          resultElem.style.color = "green";
+        } else {
+          resultElem.textContent = `❌ الإجابة خاطئة. الإجابة الصحيحة هي ${convertToArabicNumbers(ans)}.`;
+          resultElem.style.color = "red";
+        }
+      } else {
+        resultElem.textContent = "من فضلك اكتب رقمًا صحيحًا.";
+        resultElem.style.color = "orange";
+      }
+    }
+
+    const azkar = [
+    "اللهم اجعلنا من أهل القرآن.",
+    "اللهم إني أسألك العفو والعافية.",
+    "سبحان الله وبحمده، سبحان الله العظيم.",
+    "اللهم أتنا في الدنيا حسنة وفي الآخرة حسنة.",
+    "اللهم اغفر لي ولأبوي ولأصحابي ولأصدقائي.",
+    "اللهم إني أسالك الهدى والتقى والعفاف والغنى.",
+    "يا الله، اجعلنا من أهل الجنة.",
+    "اللهم اجعلنا من الذين يذكرونك كثيرًا.",
+    "اللهم ارزقنا الفردوس الأعلى بغير حساب.",
+    "اللهم اجعلنا من المستغفرين بالأسحار.",
+    "اللهم صل على محمد وعلى آل محمد.",
+    "اللهم بارك لنا في أرزاقنا وأوقاتنا.",
+    "اللهم ارزقنا الإيمان.",
+    "اللهم تقبل منا الصلاة والصيام.",
+    "اللهم اجعلنا من أهل الصدق.",
+    "اللهم اجعلنا من أهل البر.",
+    "اللهم أهدنا واهد بنا.",
+    "اللهم إنا نسألك علمًا نافعًا.",
+    "اللهم اجعلنا من الذين يسيرون على صراطك المستقيم.",
+    "اللهم اجعلنا من الذين إذا ذكروا ذكروا.",
+    "اللهم اجعلنا من الذين يطمئن قلوبهم بذكرك.",
+    "اللهم اجعلنا من أهل العمل الصالح.",
+    "اللهم اجعلنا من المخلصين في ديننا.",
+    "اللهم اجعلنا من الذين يتبعون الرسول.",
+    "اللهم اجعلنا من أهل الجود والكرم.",
+    "اللهم اجعلنا من أهل التوبة.",
+    "اللهم اجعلنا من أهل الصبر.",
+    "اللهم اجعلنا من أهل الشكر.",
+    "اللهم اجعلنا من أهل الرضا.",
+    "اللهم اجعلنا من أهل الفلاح.",
+    "اللهم اجعلنا من أهل السعادة.",
+    "اللهم اجعلنا من أهل المغفرة.",
+    "اللهم اجعلنا من أهل العفة.",
+    "اللهم اجعلنا من أهل الوقار.",
+    "اللهم اجعلنا من أهل الأمانة.",
+    "اللهم اجعلنا من أهل الاستغفار.",
+    "اللهم اجعلنا من أهل الدعاء.",
+    "اللهم اجعلنا من أهل الطاعة.",
+    "اللهم اجعلنا من أهل الجهاد.",
+    "اللهم اجعلنا من أهل التوفيق.",
+    "اللهم اجعلنا من أهل المسارعة في الخيرات.",
+    "اللهم اجعلنا من أهل الشجاعة.",
+    "اللهم اجعلنا من أهل الراحة.",
+    "اللهم اجعلنا من أهل الفقر إليك.",
+    "اللهم اجعلنا من أهل الاستقامة.",
+    "اللهم اجعلنا من أهل الهداية.",
+    "اللهم اجعلنا من أهل التسبيح.",
+    "اللهم اجعلنا من أهل العافية.",
+    "اللهم اجعلنا من أهل البركة في حياتنا.",
+    "اللهم اجعلنا من أهل الابتسامة.",
+    "اللهم اجعلنا من أهل الدعوة إلى الخير.",
+    "اللهم اجعلنا من أهل الكرم.",
+    "اللهم اجعلنا من أهل السكينة.",
+    "اللهم اجعلنا من أهل الجمال.",
+    "اللهم اجعلنا من أهل الصدق.",
+    "اللهم اجعلنا من أهل النقاء.",
+    "اللهم اجعلنا من أهل الرفق.",
+    "اللهم اجعلنا من أهل التقوى.",
+    "اللهم اجعلنا من أهل الفرح.",
+    "اللهم اجعلنا من أهل الرضا.",
+    "اللهم اجعلنا من أهل القوة.",
+    "اللهم اجعلنا من أهل النور.",
+    "اللهم اجعلنا من أهل الإحسان.",
+    "اللهم اجعلنا من أهل العلم.",
+    "اللهم اجعلنا من أهل التوفيق.",
+    "اللهم اجعلنا من أهل المساواة.",
+    "اللهم اجعلنا من أهل الفضل.",
+    "اللهم اجعلنا من أهل الكمال.",
+    "اللهم اجعلنا من أهل السعادة.",
+    "اللهم اجعلنا من أهل العطاء.",
+    "اللهم اجعلنا من أهل المحبة.",
+    "اللهم اجعلنا من أهل التعاون.",
+    "اللهم اجعلنا من أهل السكينة.",
+    "اللهم اجعلنا من أهل الفداء.",
+    "اللهم اجعلنا من أهل التفكر.",
+    "اللهم اجعلنا من أهل العدل.",
+    "اللهم اجعلنا من أهل الإخلاص.",
+    "اللهم اجعلنا من أهل التسليم.",
+    "اللهم اجعلنا من أهل القناعة.",
+    "اللهم اجعلنا من أهل السلام.",
+    "اللهم اجعلنا من أهل الرحمة.",
+    "اللهم اجعلنا من أهل التوكل.",
+    "اللهم اجعلنا من أهل الرفعة.",
+    "اللهم اجعلنا من أهل التجمل.",
+    "اللهم اجعلنا من أهل الجمال.",
+    "اللهم اجعلنا من أهل الفخر.",
+    "اللهم اجعلنا من أهل الاحترام.",
+    "اللهم اجعلنا من أهل التقدير.",
+    "اللهم اجعلنا من أهل الدعاء.",
+    "اللهم اجعلنا من أهل الشرف.",
+    "اللهم اجعلنا من أهل الكرامة.",
+    "اللهم اجعلنا من أهل الأمان.",
+    "اللهم اجعلنا من أهل التحمل.",
+    "اللهم اجعلنا من أهل البر.",
+    "اللهم اجعلنا من أهل الولاء."
+];
+
+
+
+// دالة لعرض الإشعار عند عرض الأذكار
+function showAzkar() {
+    let randomAzkar = azkar[Math.floor(Math.random() * azkar.length)];
+
+    // إنشاء عنصر div جديد للإشعار
+    const alertDiv = document.createElement("div");
+
+    // إضافة الكلاس المناسب للإشعار
+    alertDiv.className = "alert-message";
+
+    // إضافة النص للإشعار
+    alertDiv.textContent = randomAzkar;
+
+    // إضافة الإشعار داخل الـ body
+    document.body.appendChild(alertDiv);
+
+    // إضافة كلاس "show" لعرض الإشعار
+    setTimeout(() => {
+        alertDiv.classList.add("show");
+    }, 100);
+
+    // إخفاء الإشعار بعد 5 ثواني
+    setTimeout(() => {
+        alertDiv.style.display = "none";  // إخفاء الإشعار بعد 5 ثواني
+    }, 5000);
+
+    // إضافة حدث لإخفاء الإشعار عند الضغط عليه
+    alertDiv.addEventListener("click", function() {
+        alertDiv.style.display = "none";  // إخفاء الإشعار عند الضغط عليه
+    });
+}
+
+// عرض الأذكار بشكل دوري كل 60 ثانية (دقيقة)
+setInterval(showAzkar, 60000);
+
+// عرض التنبيه لأول مرة
+showAzkar();
+    document.getElementById("submitBtn").addEventListener("click", checkAnswer);
+    document.getElementById("newQuestionBtn").addEventListener("click", generateSubtractionQuestion);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+
+  
+  <title>لعبة توصيل الأشكال</title>
+  <style>
+  body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fff8f0;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+    h1 {
+      color: #ad1457;
+    }
+    #content {
+      position: relative;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .item {
+      background-color: #f8bbd0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      min-width: 200px;
+      font-size: 1.1em;
+      transition: background 0.3s;
+    }
+    .matched {
+      background-color: #c8e6c9 !important;
+      color: #2e7d32;
+      pointer-events: none;
+    }
+    .selected {
+      outline: 3px solid #7b1fa2;
+    }
+    .buttons-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+    .buttons-area button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      background-color: #ce93d8;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .buttons-area button:hover {
+      background-color: #ba68c8;
+    }
+    .connection-line {
+      position: absolute;
+      height: 2px;
+      background-color: #7b1fa2;
+      transform-origin: 0 0;
+      z-index: 5;
+    }
+    .result-message {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #4a148c;
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #666;
+    }
+    .alert-message {
+  font-size: 18px;
+  color: #fff;
+  background-color: #db96c4;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 300px;
+  position: fixed;
+  top: 20px;
+  right: 20px; /* بدل left: 50% */
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.alert-message.show {
+    opacity: 1;  /* جعل الإشعار يظهر */
+}
+
+
+.btn-custom {
+  padding: 10px 25px;
+  font-size: 1em;
+  border-radius: 10px;
+  background-color: #a5d6a7;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.btn-custom:hover {
+  background-color: #81c784;
+}
+
+
+  @media only screen and (max-width: 600px) {
+    body {
+      padding: 10px !important;
+      font-size: 16px !important;
+      text-align: center !important;
+      margin: 0 !important;
+    }
+
+    h1, h2, h3 {
+      font-size: 20px !important;
+      text-align: center !important;
+    }
+
+    img {
+      max-width: 80% !important;
+      height: auto !important;
+      margin: 10px auto !important;
+      display: block !important;
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"],
+    button {
+      width: 90% !important;
+      font-size: 16px !important;
+      padding: 10px !important;
+      margin: 10px auto !important;
+      display: block !important;
+    }
+
+    #options {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #options button {
+      width: 90% !important;
+    }
+
+    footer {
+      font-size: 12px !important;
+      padding: 10px !important;
+    }
+  }
+
+
+
+  </style>
+</head>
+<body>
+  <h1>🧩 لعبة توصيل الأشكال</h1>
+  <img src="assets/images/صورة8.png"
+         alt="وصف الصورة"
+         style="max-width: 150px; height: auto; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1);" />
+  </div>
+  <p style="font-size: 1.3em; font-weight: bold;">قم بتوصيل كل وصف بالشكل المناسب له</p>
+  <div id="content">
+    <div class="container">
+      <div class="column" id="descriptions"></div>
+      <div class="column" id="shapes"></div>
+    </div>
+    <div class="result-message" id="resultMessage"></div>
+  </div>
+
+  <div class="buttons-area">
+    <button onclick="restartGame()" class="btn-custom">🌀 سؤال جديد</button>
+    <a href="index.html"><button class="btn-custom">🏠 رجوع للرئيسية</button></a>
+  </div>
+  
+  <footer style="margin-top: 40px; padding: 15px; background-color: #333; color: white; border-radius: 10px; font-size: 14px;">
+    © حقوق الملكية محفوظة لمروة أبو بكر - سلطنة عمان 2025
+  </footer>
+  <script>
+    const allPairs = [
+      { id: 1, description: "شكل له ثلاث أضلاع فقط", symbol: "⧍" },
+      { id: 2, description: "شكل لا يحتوي على زوايا", symbol: "⚪" },
+      { id: 3, description: "أربعة أضلاع متساوية", symbol: "⬜" },
+      { id: 4, description: "شكل نصف دائري علوي", symbol: "◠" },
+      { id: 5, description: "شكل له خمس زوايا", symbol: "⬟" },
+      { id: 6, description: "شكل له ستة أضلاع وزوايا", symbol: "⬡" },
+      { id: 7, description: "شكل دائري أحمر", symbol: "🔴" },
+      { id: 8, description: "شكل مربع أحمر", symbol: "🟥" },
+      { id: 9, description: "رمز يدل على الاتجاه", symbol: "➡️" },
+      { id: 10, description: "يشبه البيضة", symbol: "🥚" },
+      { id: 11, description: "يشبه الزهرة", symbol: "❀" },
+      { id: 12, description: "أربعة أضلاع متوازية ومائلة", symbol: "▰" },
+      { id: 13, description: "شكل معين بزوايا مائلة", symbol: "◆" },
+      { id: 14, description: "رمز زائد يتكون من خطين متقاطعين", symbol: "➕" },
+      { id: 15, description: "قلب  ", symbol: "❤️" },
+      { id: 16, description: "شكل حلزوني", symbol: "@" },
+      { id: 17, description: "مثلث متساوي الأضلاع", symbol: "🔺" },
+      { id: 18, description: "مستطيل بنصف دائرة", symbol: "🧲" },
+      { id: 19, description: "قوس علوي", symbol: "◜" },
+      { id: 20, description: "سهم منحني لليمين", symbol: "↪️" }
+    ];
+
+    let selectedDesc = null;
+    let selectedShape = null;
+    let correctMatches = 0;
+    let stageIndex = 0;
+
+    function getRandomPairs(count) {
+      const shuffled = [...allPairs].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
+    }
+
+    function loadGame() {
+      const descCol = document.getElementById('descriptions');
+      const shapeCol = document.getElementById('shapes');
+      const container = document.getElementById('content');
+      const resultEl = document.getElementById('resultMessage');
+      resultEl.innerText = "";
+      descCol.innerHTML = '';
+      shapeCol.innerHTML = '';
+      container.querySelectorAll('.connection-line').forEach(line => line.remove());
+      correctMatches = 0;
+
+      const pairs = getRandomPairs(4);
+      pairs.forEach(pair => {
+        const descDiv = document.createElement('div');
+        descDiv.className = 'item';
+        descDiv.textContent = pair.description;
+        descDiv.dataset.id = pair.id;
+        descDiv.onclick = () => selectDesc(descDiv);
+        descCol.appendChild(descDiv);
+      });
+
+      pairs.sort(() => Math.random() - 0.5);
+      pairs.forEach(pair => {
+        const shapeDiv = document.createElement('div');
+        shapeDiv.className = 'item';
+        shapeDiv.textContent = pair.symbol;
+        shapeDiv.dataset.id = pair.id;
+        shapeDiv.onclick = () => selectShape(shapeDiv);
+        shapeCol.appendChild(shapeDiv);
+      });
+
+      // حفظ المرحلة الحالية
+      container.dataset.currentStage = JSON.stringify(pairs.map(p => p.id));
+    }
+
+    function selectDesc(el) {
+      if (el.classList.contains('matched')) return;
+      if (selectedDesc) selectedDesc.classList.remove('selected');
+      selectedDesc = el;
+      el.classList.add('selected');
+      checkMatch();
+    }
+
+    function selectShape(el) {
+      if (el.classList.contains('matched')) return;
+      if (selectedShape) selectedShape.classList.remove('selected');
+      selectedShape = el;
+      el.classList.add('selected');
+      checkMatch();
+    }
+
+    function checkMatch() {
+      if (selectedDesc && selectedShape) {
+        if (
+          selectedDesc.dataset.id === selectedShape.dataset.id &&
+          !selectedDesc.classList.contains('matched') &&
+          !selectedShape.classList.contains('matched')
+        ) {
+          selectedDesc.classList.add('matched');
+          selectedShape.classList.add('matched');
+          drawLineBetween(selectedDesc, selectedShape);
+          correctMatches++;
+
+          const total = 4;
+          document.getElementById('resultMessage').innerText = `عدد الإجابات الصحيحة: ${correctMatches} من ${total}`;
+          if (correctMatches === total) {
+            setTimeout(() => {
+              document.getElementById('resultMessage').innerText = "👏 أحسنت! ننتقل للمرحلة التالية...";
+              setTimeout(() => loadGame(), 2000);
+            }, 1000);
+          }
+        }
+
+        selectedDesc.classList.remove('selected');
+        selectedShape.classList.remove('selected');
+        selectedDesc = null;
+        selectedShape = null;
+      }
+    }
+
+    function drawLineBetween(elem1, elem2) {
+      const container = document.getElementById('content');
+      const containerRect = container.getBoundingClientRect();
+      const rect1 = elem1.getBoundingClientRect();
+      const rect2 = elem2.getBoundingClientRect();
+
+      const x1 = rect1.left + rect1.width / 2 - containerRect.left;
+      const y1 = rect1.top + rect1.height / 2 - containerRect.top;
+      const x2 = rect2.left + rect2.width / 2 - containerRect.left;
+      const y2 = rect2.top + rect2.height / 2 - containerRect.top;
+
+      const length = Math.hypot(x2 - x1, y2 - y1);
+      const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+      const line = document.createElement('div');
+      line.classList.add('connection-line');
+      line.style.width = `${length}px`;
+      line.style.transform = `rotate(${angle}deg)`;
+      line.style.top = `${y1}px`;
+      line.style.left = `${x1}px`;
+      container.appendChild(line);
+    }
+
+    function restartGame() {
+      loadGame();
+    }
+
+    loadGame();
+  
+    // --- إشعارات الأذكار ---
+    const azkar = [
+    "اللهم اجعلنا من أهل القرآن.",
+    "اللهم إني أسألك العفو والعافية.",
+    "سبحان الله وبحمده، سبحان الله العظيم.",
+    "اللهم أتنا في الدنيا حسنة وفي الآخرة حسنة.",
+    "اللهم اغفر لي ولأبوي ولأصحابي ولأصدقائي.",
+    "اللهم إني أسالك الهدى والتقى والعفاف والغنى.",
+    "يا الله، اجعلنا من أهل الجنة.",
+    "اللهم اجعلنا من الذين يذكرونك كثيرًا.",
+    "اللهم ارزقنا الفردوس الأعلى بغير حساب.",
+    "اللهم اجعلنا من المستغفرين بالأسحار.",
+    "اللهم صل على محمد وعلى آل محمد.",
+    "اللهم بارك لنا في أرزاقنا وأوقاتنا.",
+    "اللهم ارزقنا الإيمان.",
+    "اللهم تقبل منا الصلاة والصيام.",
+    "اللهم اجعلنا من أهل الصدق.",
+    "اللهم اجعلنا من أهل البر.",
+    "اللهم أهدنا واهد بنا.",
+    "اللهم إنا نسألك علمًا نافعًا.",
+    "اللهم اجعلنا من الذين يسيرون على صراطك المستقيم.",
+    "اللهم اجعلنا من الذين إذا ذكروا ذكروا.",
+    "اللهم اجعلنا من الذين يطمئن قلوبهم بذكرك.",
+    "اللهم اجعلنا من أهل العمل الصالح.",
+    "اللهم اجعلنا من المخلصين في ديننا.",
+    "اللهم اجعلنا من الذين يتبعون الرسول.",
+    "اللهم اجعلنا من أهل الجود والكرم.",
+    "اللهم اجعلنا من أهل التوبة.",
+    "اللهم اجعلنا من أهل الصبر.",
+    "اللهم اجعلنا من أهل الشكر.",
+    "اللهم اجعلنا من أهل الرضا.",
+    "اللهم اجعلنا من أهل الفلاح.",
+    "اللهم اجعلنا من أهل السعادة.",
+    "اللهم اجعلنا من أهل المغفرة.",
+    "اللهم اجعلنا من أهل العفة.",
+    "اللهم اجعلنا من أهل الوقار.",
+    "اللهم اجعلنا من أهل الأمانة.",
+    "اللهم اجعلنا من أهل الاستغفار.",
+    "اللهم اجعلنا من أهل الدعاء.",
+    "اللهم اجعلنا من أهل الطاعة.",
+    "اللهم اجعلنا من أهل الجهاد.",
+    "اللهم اجعلنا من أهل التوفيق.",
+    "اللهم اجعلنا من أهل المسارعة في الخيرات.",
+    "اللهم اجعلنا من أهل الشجاعة.",
+    "اللهم اجعلنا من أهل الراحة.",
+    "اللهم اجعلنا من أهل الفقر إليك.",
+    "اللهم اجعلنا من أهل الاستقامة.",
+    "اللهم اجعلنا من أهل الهداية.",
+    "اللهم اجعلنا من أهل التسبيح.",
+    "اللهم اجعلنا من أهل العافية.",
+    "اللهم اجعلنا من أهل البركة في حياتنا.",
+    "اللهم اجعلنا من أهل الابتسامة.",
+    "اللهم اجعلنا من أهل الدعوة إلى الخير.",
+    "اللهم اجعلنا من أهل الكرم.",
+    "اللهم اجعلنا من أهل السكينة.",
+    "اللهم اجعلنا من أهل الجمال.",
+    "اللهم اجعلنا من أهل الصدق.",
+    "اللهم اجعلنا من أهل النقاء.",
+    "اللهم اجعلنا من أهل الرفق.",
+    "اللهم اجعلنا من أهل التقوى.",
+    "اللهم اجعلنا من أهل الفرح.",
+    "اللهم اجعلنا من أهل الرضا.",
+    "اللهم اجعلنا من أهل القوة.",
+    "اللهم اجعلنا من أهل النور.",
+    "اللهم اجعلنا من أهل الإحسان.",
+    "اللهم اجعلنا من أهل العلم.",
+    "اللهم اجعلنا من أهل التوفيق.",
+    "اللهم اجعلنا من أهل المساواة.",
+    "اللهم اجعلنا من أهل الفضل.",
+    "اللهم اجعلنا من أهل الكمال.",
+    "اللهم اجعلنا من أهل السعادة.",
+    "اللهم اجعلنا من أهل العطاء.",
+    "اللهم اجعلنا من أهل المحبة.",
+    "اللهم اجعلنا من أهل التعاون.",
+    "اللهم اجعلنا من أهل السكينة.",
+    "اللهم اجعلنا من أهل الفداء.",
+    "اللهم اجعلنا من أهل التفكر.",
+    "اللهم اجعلنا من أهل العدل.",
+    "اللهم اجعلنا من أهل الإخلاص.",
+    "اللهم اجعلنا من أهل التسليم.",
+    "اللهم اجعلنا من أهل القناعة.",
+    "اللهم اجعلنا من أهل السلام.",
+    "اللهم اجعلنا من أهل الرحمة.",
+    "اللهم اجعلنا من أهل التوكل.",
+    "اللهم اجعلنا من أهل الرفعة.",
+    "اللهم اجعلنا من أهل التجمل.",
+    "اللهم اجعلنا من أهل الجمال.",
+    "اللهم اجعلنا من أهل الفخر.",
+    "اللهم اجعلنا من أهل الاحترام.",
+    "اللهم اجعلنا من أهل التقدير.",
+    "اللهم اجعلنا من أهل الدعاء.",
+    "اللهم اجعلنا من أهل الشرف.",
+    "اللهم اجعلنا من أهل الكرامة.",
+    "اللهم اجعلنا من أهل الأمان.",
+    "اللهم اجعلنا من أهل التحمل.",
+    "اللهم اجعلنا من أهل البر.",
+    "اللهم اجعلنا من أهل الولاء."
+    ];
+
+    function showAzkar() {
+      const alertDiv = document.createElement("div");
+      alertDiv.className = "alert-message";
+      alertDiv.textContent = azkar[Math.floor(Math.random() * azkar.length)];
+      document.body.appendChild(alertDiv);
+      setTimeout(() => alertDiv.classList.add("show"), 100);
+      setTimeout(() => alertDiv.remove(), 5000);
+      alertDiv.onclick = () => alertDiv.remove();
+    }
+
+    setInterval(showAzkar, 60000);
+    showAzkar();
+    </script>
+
+</body>
+</html>
