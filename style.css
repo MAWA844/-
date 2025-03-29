@@ -1,13 +1,11 @@
-body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5, #ff8b94);
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
+#app {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 h1, h2, h3 {
@@ -651,3 +649,44 @@ footer {
       .alert-message {
         opacity: 1;
       }
+      @media only screen and (max-width: 600px) {
+        #app h1 {
+          font-size: 22px;
+        }
+      
+        #app img {
+          max-width: 80%;
+          height: auto;
+          margin-top: 15px;
+        }
+      
+        #showAlertBtn {
+          font-size: 16px;
+          padding: 8px 16px;
+        }
+      }
+      
+      @media only screen and (min-width: 601px) and (max-width: 1024px) {
+        #app h1 {
+          font-size: 26px;
+        }
+      
+        #app img {
+          max-width: 60%;
+          height: auto;
+          margin-top: 20px;
+        }
+      }
+      
+      @media only screen and (min-width: 1025px) {
+        #app h1 {
+          font-size: 32px;
+        }
+      
+        #app img {
+          max-width: 280px;
+          height: auto;
+          margin-top: 20px;
+        }
+      }
+      
