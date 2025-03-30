@@ -215,34 +215,39 @@
   #matching-area,
   #names-area {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr); /* عمودين متساويين */
+    grid-template-columns: repeat(2, minmax(80px, 1fr)) !important; /* عمودين بمرونة */
     gap: 12px;
     justify-items: center;
+    align-items: start;
   }
 
   .matching-shape-item,
   .matching-name-item {
-    font-size: 1.2em !important;
-    padding: 6px 8px !important;
-    min-width: auto !important;
-    max-width: 50px !important;
+    font-size: 1.1em !important;
+    padding: 8px 10px !important;
+    max-width: 100% !important;
+    width: 100% !important;
     text-align: center;
     white-space: normal;
     word-break: break-word;
+    border-radius: 10px;
   }
 
   .item {
-    min-width:30% !important;
-    padding:5px 8px !important;
+    width: 100% !important;
     font-size: 1em !important;
+    padding: 10px 12px !important;
     margin: auto !important;
+    max-width: 100%;
   }
 
   .container {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
+    align-items: center;
   }
 }
+
 
 
   </style>
